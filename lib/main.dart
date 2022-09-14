@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:pokedex/constants/app_theme.dart';
-import 'package:pokedex/screens/Home_screen/home_screen.dart';
-import 'package:pokedex/services/storage/storage_services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokedex/core/constants/app_theme.dart';
+import 'package:pokedex/data/remote_datasource/pokemon_repository.dart';
+import 'package:pokedex/presentation/bloc/pokemon_bloc.dart';
+import 'package:pokedex/presentation/bloc/pokemon_event.dart';
+import 'package:pokedex/presentation/screens/Home_screen/home_screen.dart';
+import 'package:pokedex/core/storage_service/storage_services.dart';
 
 void main() async {
   await AppStorage().initializeHiveParameters();
@@ -15,10 +18,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: AppThemeData.appThemeData,
-      home: const MyHomePage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              PokemonBloc(PokemonRepository())..add(LoadPokemons(context)),
+          child: Container(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: AppThemeData.appThemeData,
+        home: const MyHomePage(),
+      ),
     );
   }
 }

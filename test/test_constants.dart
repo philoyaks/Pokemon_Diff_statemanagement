@@ -1,7 +1,7 @@
 import 'package:mocktail/mocktail.dart';
-import 'package:pokedex/models/pokemon_model.dart';
-import 'package:pokedex/models/pokemon_response_model.dart';
-import 'package:pokedex/services/Repository/pokemon_repo_interface.dart';
+import 'package:pokedex/domain/models/pokemon_model.dart';
+import 'package:pokedex/domain/models/pokemon_response_model.dart';
+import 'package:pokedex/domain/repository/pokemon_repository.dart';
 
 Pokemon mockPokemonTest = Pokemon(
     id: 6,
@@ -17,4 +17,4 @@ PokemonResponseModel testPokemonResponseModel = PokemonResponseModel(
       Result(name: 'Bukator', url: "https://pokeapi.co/api/v2/pokemon/1/")
     ]);
 
-class PokemonRepositoryMock extends Mock implements RepoInterface {}
+class PokemonRepositoryMock extends Mock implements PokemonRepoInterface {}
